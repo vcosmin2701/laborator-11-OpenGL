@@ -40,7 +40,7 @@ void myInit()
 	glTexParameterf(GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 	// incercati si GL_OBJECT_PLANE
-	glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+	glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_PLANE);
 
 	// coeficientii planului fata de care se calculeaza directia texturii
 	GLfloat sGenParams[] = { 0.0, 0.0, 1.0, 0.0 };
