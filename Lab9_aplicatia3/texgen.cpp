@@ -18,7 +18,7 @@ void makeStripeImage(void)
 {
 	for (int j = 0; j < stripeImageWidth; j++) {
 		stripeImage[3 * j] = (j <= 4) ? 255 : 0; // rosu
-		stripeImage[3 * j + 1] = (j > 4) ? 255 : 0; // verde
+		stripeImage[3 * j] = (j > 4) ? 255 : 0; // verde
 		stripeImage[3 * j + 2] = 0; // galben
 	}
 }
@@ -45,7 +45,7 @@ void myInit()
 	// coeficientii planului fata de care se calculeaza directia texturii
 	GLfloat sGenParams[] = { 0.0, 0.0, 1.0, 0.0 };
 	// incercati si parametrul GL_EYE_PLANE
-	glTexGenfv(GL_S, GL_OBJECT_PLANE, sGenParams);
+	glTexGenfv(GL_S, GL_EYE_PLANE, sGenParams);
 
 	glTexImage1D(GL_TEXTURE_1D, 0, 3, stripeImageWidth,
 		0, GL_RGB, GL_UNSIGNED_BYTE, stripeImage);
@@ -65,6 +65,8 @@ void myInit()
 	glEnable(GL_AUTO_NORMAL);
 	glEnable(GL_NORMALIZE);
 	glMaterialf(GL_FRONT, GL_SHININESS, 100.0); // exponentul pentru stralucire
+
+
 }
 
 void CALLBACK display()
@@ -73,9 +75,9 @@ void CALLBACK display()
 
 	glLoadIdentity();
 	glRotatef(angle, 1.0, 1.0, 1.0);
-
-	auxSolidTeapot(2.0);
 	
+	auxSolidTeapot(2.0);
+
 	glFlush();
 }
 
