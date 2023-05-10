@@ -43,7 +43,7 @@ void myInit()
 	glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
 
 	// coeficientii planului fata de care se calculeaza directia texturii
-	GLfloat sGenParams[] = { 1.0, 1.0, 1.0, 0.0 };
+	GLfloat sGenParams[] = { 0.0, 0.0, 1.0, 0.0 };
 	// incercati si parametrul GL_EYE_PLANE
 	glTexGenfv(GL_S, GL_OBJECT_PLANE, sGenParams);
 
@@ -64,7 +64,6 @@ void myInit()
 	// calcularea automata a normalelor pentru coordonate generate cu GL_MAP1_VERTEX
 	glEnable(GL_AUTO_NORMAL);
 	glEnable(GL_NORMALIZE);
-
 	glMaterialf(GL_FRONT, GL_SHININESS, 100.0); // exponentul pentru stralucire
 }
 
@@ -76,7 +75,7 @@ void CALLBACK display()
 	glRotatef(angle, 1.0, 1.0, 1.0);
 
 	auxSolidTeapot(2.0);
-
+	
 	glFlush();
 }
 
