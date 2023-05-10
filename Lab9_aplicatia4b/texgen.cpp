@@ -9,26 +9,43 @@
 #include "glaux.h"
 
 static int angle = 0;
+GLuint textureId1;
 
 #define stripeImageWidth 32
 GLubyte stripeImage[3 * stripeImageWidth];
 
-// construieste o textura 1D cu 3 octeti pentru fiecare texel din 32 texeli 5 sunt rosii si 27 sunt verzi
-void makeStripeImage(void)
+GLuint incarcaTextura(const char* s)
 {
-	for (int j = 0; j < stripeImageWidth; j++) {
-		stripeImage[3 * j] = (j <= 4) ? 255 : 0; // rosu
-		stripeImage[3 * j + 1] = (j > 4) ? 255 : 0; // verde
-		stripeImage[3 * j + 2] = 0; // galben
+	GLuint textureId = 0;
+	AUX_RGBImageRec* pImagineTextura = auxDIBImageLoad(s);
+
+	if (pImagineTextura != NULL)
+	{
+		glGenTextures(1, &textureId);
+		glBindTexture(GL_TEXTURE_2D, textureId);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexImage2D(GL_TEXTURE_2D, 0, 3, pImagineTextura->sizeX, pImagineTextura->sizeY,
+			0, GL_RGB, GL_UNSIGNED_BYTE, pImagineTextura->data);
 	}
+	if (pImagineTextura)
+	{
+		if (pImagineTextura->data) {
+			free(pImagineTextura->data);
+		}
+		free(pImagineTextura);
+	}
+	return textureId;
 }
+
 
 void myInit()
 {
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 
-	makeStripeImage();
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+	textureId1 = incarcaTextura("covor.bmp");
 
 	// incercati si parametrul GL_DECAL. Veti constata ca nu se tine seama de iluminare
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
@@ -65,7 +82,12 @@ void myInit()
 	glEnable(GL_AUTO_NORMAL);
 	glEnable(GL_NORMALIZE);
 
-	glMaterialf(GL_FRONT, GL_SHININESS, 100.0); // exponentul pentru stralucire
+	textureId1 = incarcaTextura("covor.bmp");
+
+
+	glEnable(GL_TEXTURE_2D);
+	glShadeModel(GL_FLAT);
+
 }
 
 void CALLBACK display()
@@ -75,6 +97,7 @@ void CALLBACK display()
 	glLoadIdentity();
 	glRotatef(angle, 1.0, 1.0, 1.0);
 
+	glBindTexture(GL_TEXTURE_2D, textureId1);
 	auxSolidTeapot(2.0);
 
 	glFlush();

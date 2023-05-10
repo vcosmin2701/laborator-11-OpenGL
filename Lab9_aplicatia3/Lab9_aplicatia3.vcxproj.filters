@@ -52,5 +52,8 @@
     <CopyFileToFolders Include="dlls\opengl32.dll">
       <Filter>dlls</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Lab9_aplicatia4a\covor.bmp">
+      <Filter>Resource Files</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>
